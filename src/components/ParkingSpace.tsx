@@ -13,16 +13,16 @@ interface ParkingSpaceProps {
     };
 }
 
-//const calculateCharges = (startTime: Date) => {
-  //  const hours = (new Date().getTime() - new Date(startTime).getTime()) / 3600000;
-    //return hours <= 2 ? 10 : 10 + Math.ceil(hours - 2) * 10;
-//};
+const calculateCharges = (startTime: Date) => {
+    const hours = (new Date().getTime() - new Date(startTime).getTime()) / 3600000;
+    return hours <= 2 ? 10 : 10 + Math.ceil(hours - 2) * 10;
+};
 
 // Test karne ke liye
-const calculateCharges= (startTime: Date) => {
+/*const calculateCharges= (startTime: Date) => {
     const seconds = (new Date().getTime() - new Date(startTime).getTime()) / 1000;
     return seconds <= 10 ? 10 : 10 + Math.ceil((seconds - 10) / 5) * 10;
-};
+};*/
 
 const ParkingSpace: React.FC<ParkingSpaceProps> = ({ space }) => {
     const [modalOpen, setModalOpen] = useState(false);

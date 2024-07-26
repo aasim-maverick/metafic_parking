@@ -13,6 +13,10 @@ const ParkingLot: React.FC = () => {
     const dispatch = useDispatch();
 
     const handleAddCar = () => {
+        if (!registration){
+            alert("Enter registration details of the vehicle.")
+            return;
+        }
         if (spaces.some(space => !space.car)) {
             dispatch(addCar({ registration, startTime }));
         } else {

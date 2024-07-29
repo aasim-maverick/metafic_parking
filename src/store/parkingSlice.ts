@@ -1,6 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-// Define types
 interface Car {
     registration: string;
     startTime: Date;
@@ -24,24 +23,29 @@ const parkingSlice = createSlice({
     initialState,
     reducers: {
         setTotalSpaces(state, action: PayloadAction<number>) {
-            state.spaces = Array.from({ length: action.payload }, (_, i) => ({ id: i + 1 }));
+            state.spaces = Array.from(
+                { length: action.payload }, 
+                (_, i) => ({ id: i + 1 })
+            );
         },
         addCar(state, action: PayloadAction<Car>) {
-            const emptySpace = state.spaces.find(space => !space.car);
-            if (emptySpace) {
-                emptySpace.car = action.payload;
+            const emptySpaces = state.spaces.filter(space => !space.car);
+            if (emptySpaces.length > 0) {
+                const randomIndex = Math.floor(Math.random() * emptySpaces.length);
+                emptySpaces[randomIndex].car = action.payload;
+            } else {
+                console.error('No empty spaces available');
             }
         },
         removeCar(state, action: PayloadAction<number>) {
             const space = state.spaces.find(space => space.id === action.payload);
-            if (space) {
+            if (space && space.car) {
                 delete space.car;
             }
         },
     },
 });
 
-export {};
+export{};
 export const { setTotalSpaces, addCar, removeCar } = parkingSlice.actions;
 export default parkingSlice.reducer;
-

@@ -13,10 +13,17 @@ const ParkingLot: React.FC = () => {
     const dispatch = useDispatch();
 
     const handleAddCar = () => {
-        if (!registration){
-            alert("Enter registration details of the vehicle.")
+        const registrationRegex = /^[A-Z]{2}[0-9]{2}[A-Z]{2}[0-9]{4}$/i;
+
+        if (!registrationRegex.test(registration)) {
+            alert('Invalid registration number. Please enter a valid Indian car registration number (e.g., MP09AB1234) without any spaces.');
             return;
         }
+        if (spaces.some(space => space.car && space.car.registration === registration)) {
+            alert('This car registration number already exists in the parking lot.');
+            return;
+        }
+
         if (spaces.some(space => !space.car)) {
             dispatch(addCar({ registration, startTime }));
         } else {
@@ -30,7 +37,7 @@ const ParkingLot: React.FC = () => {
                 <TextField
                     label="Car Registration"
                     value={registration}
-                    onChange={e => setRegistration(e.target.value)}
+                    onChange={e => setRegistration(e.target.value.replace(/\s+/g, '').toUpperCase())} 
                     fullWidth
                 />
                 <Button onClick={handleAddCar} variant="contained" sx={{ mt: 2 }}>
@@ -49,5 +56,4 @@ const ParkingLot: React.FC = () => {
 };
 
 export default ParkingLot;
-
 export{};

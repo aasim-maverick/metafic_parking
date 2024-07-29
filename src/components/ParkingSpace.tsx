@@ -18,12 +18,6 @@ const calculateCharges = (startTime: Date) => {
     return hours <= 2 ? 10 : 10 + Math.ceil(hours - 2) * 10;
 };
 
-// Test karne ke liye
-/*const calculateCharges= (startTime: Date) => {
-    const seconds = (new Date().getTime() - new Date(startTime).getTime()) / 1000;
-    return seconds <= 10 ? 10 : 10 + Math.ceil((seconds - 10) / 5) * 10;
-};*/
-
 const ParkingSpace: React.FC<ParkingSpaceProps> = ({ space }) => {
     const [modalOpen, setModalOpen] = useState(false);
     const dispatch = useDispatch();
@@ -45,13 +39,13 @@ const ParkingSpace: React.FC<ParkingSpaceProps> = ({ space }) => {
     };
 
     return (
-        <Card variant="outlined">
+        <Card variant="outlined" sx={{ minHeight: 150, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
             <CardContent>
                 <Typography variant="h6">Space {space.id}</Typography>
                 {space.car ? (
                     <>
                         <Typography>Car: {space.car.registration}</Typography>
-                        <Button onClick={() => setModalOpen(true)} variant="contained">
+                        <Button onClick={() => setModalOpen(true)} variant="contained" sx={{ mt: 2 }}>
                             Manage
                         </Button>
                         <Dialog open={modalOpen} onClose={() => setModalOpen(false)}>
@@ -70,7 +64,7 @@ const ParkingSpace: React.FC<ParkingSpaceProps> = ({ space }) => {
                         </Dialog>
                     </>
                 ) : (
-                    <Typography>Empty</Typography>
+                    <Typography sx={{ flexGrow: 1 }}>Empty</Typography>
                 )}
             </CardContent>
         </Card>
